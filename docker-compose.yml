@@ -1,0 +1,15 @@
+version: '3.9'
+services:
+  py-srv-client:
+    build: py-srv-client
+    depends_on: 
+      py-srv-server:
+        condition: service_healthy
+  
+  py-srv-server:
+    build: py-srv-server
+    healthcheck:
+      test: [ "CMD", "ls", "/root" ]
+      interval: 15s
+      timeout: 10s
+      retries: 10
